@@ -19,7 +19,7 @@ addresstype VARCHAR(60) NOT NULL UNIQUE
 
 CREATE TABLE IF NOT EXISTS Addresses(
 Id INTEGER PRIMARY KEY,
-addresstype_id INTEGER,
+addresstype_id INTEGER NOT NULL,
 addressline VARCHAR(60) NOT NULL,
 postalcode_id INTEGER NOT NULL,
 CONSTRAINT fk_addresstypes FOREIGN KEY(addresstype_id) REFERENCES Addresstypes(id),
@@ -59,6 +59,12 @@ quantity_in_stock INTEGER NOT NULL,
 CONSTRAINT fk_supplies FOREIGN KEY(supply_id) REFERENCES Supplies(id)
 );
 
+CREATE TABLE IF NOT EXISTS Orders(
+Id INTEGER PRIMARY KEY,
+orderdate DATE NOT NULL,
+orderprice FLOAT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Purchases(
 Id INTEGER PRIMARY KEY,
 supply_id INTEGER NOT NULL,
@@ -67,10 +73,4 @@ quantity INTEGER NOT NULL,
 totalprice FLOAT NOT NULL,
 CONSTRAINT fk_supplies FOREIGN KEY (supply_id) REFERENCES Supplies(id),
 CONSTRAINT fk_orders FOREIGN KEY (order_id) REFERENCES Orders(id)
-);
-
-CREATE TABLE IF NOT EXISTS Orders(
-Id INTEGER PRIMARY KEY,
-orderdate DATE NOT NULL,
-orderprice FLOAT NOT NULL
 );
