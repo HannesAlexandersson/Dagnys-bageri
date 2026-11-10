@@ -1,0 +1,76 @@
+-- SQLite
+CREATE TABLE IF NOT EXISTS Cities(
+Id INTEGER PRIMARY KEY,
+city VARCHAR(50) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS Postalcodes(
+Id INTEGER PRIMARY KEY,
+postalcode CHAR(5) UNIQUE NOT NULL,
+city_id INTEGER NOT NULL,
+CONSTRAINT fk_cities FOREIGN KEY(city_id) REFERENCES Cities(id)
+);
+
+CREATE TABLE IF NOT EXISTS Addresstypes(
+Id INTEGER PRIMARY KEY,
+addresstype VARCHAR(60) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Addresses(
+Id INTEGER PRIMARY KEY,
+addresstype_id INTEGER,
+addressline VARCHAR(60) NOT NULL,
+postalcode_id INTEGER NOT NULL,
+CONSTRAINT fk_addresstypes FOREIGN KEY(addresstype_id) REFERENCES Addresstypes(id),
+CONSTRAINT fk_postalcodes FOREIGN KEY(postalcode_id) REFERENCES Postalcodes(id)
+);
+
+CREATE TABLE IF NOT EXISTS Contactpersons(
+Id INTEGER PRIMARY KEY,
+name VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Suppliers(
+Id INTEGER PRIMARY KEY,
+name VARCHAR(50) NOT NULL UNIQUE,
+address_id INTEGER NOT NULL,
+contactperson_id INTEGER,
+phone VARCHAR(15) NOT NULL UNIQUE,
+email VARCHAR(128) NOT NULL UNIQUE,
+CONSTRAINT fk_addresses FOREIGN KEY(address_id) REFERENCES Addresses(id),
+CONSTRAINT fk_contactpersons FOREIGN KEY(contactperson_id) REFERENCES Contactpersons(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS Supplies(
+Id INTEGER PRIMARY KEY,
+artickelnumber VARCHAR(50) UNIQUE NOT NULL,
+name VARCHAR(80) NOT NULL,
+price_per_kg FLOAT NOT NULL,
+supplier_id INTEGER NOT NULL,
+CONSTRAINT fk_suppliers FOREIGN KEY(supplier_id) REFERENCES Suppliers(id)
+);
+
+CREATE TABLE IF NOT EXISTS Inventorys(
+Id INTEGER PRIMARY KEY,
+supply_id INTEGER NOT NULL UNIQUE,
+quantity_in_stock INTEGER NOT NULL,
+CONSTRAINT fk_supplies FOREIGN KEY(supply_id) REFERENCES Supplies(id)
+);
+
+CREATE TABLE IF NOT EXISTS Purchases(
+Id INTEGER PRIMARY KEY,
+supply_id INTEGER NOT NULL,
+order_id INTEGER NOT NULL,
+quantity INTEGER NOT NULL,
+totalprice FLOAT NOT NULL,
+CONSTRAINT fk_supplies FOREIGN KEY (supply_id) REFERENCES Supplies(id),
+CONSTRAINT fk_orders FOREIGN KEY (order_id) REFERENCES Orders(id)
+);
+
+CREATE TABLE IF NOT EXISTS Orders(
+Id INTEGER PRIMARY KEY,
+orderdate DATE NOT NULL,
+orderprice FLOAT NOT NULL
+);
