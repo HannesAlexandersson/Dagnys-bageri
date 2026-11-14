@@ -1,5 +1,6 @@
 # Dagnys bakery
 ![Database Visualisation](images/dbvisualisation.png)
+Legend: NN = Not Null, PK = Primary Key, FK = Foreign Key, U = Unique
 ## Grade requirements
 "En normaliserad databas design enligt de regler som vi gått igenom. Korrekta
 Primary Keys ska användas.
