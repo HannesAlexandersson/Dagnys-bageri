@@ -1,5 +1,5 @@
 # Dagnys bakery
-
+![Database Visualisation](images/dbvisualisation.png)
 ## Grade requirements
 "En normaliserad databas design enligt de regler som vi gått igenom. Korrekta
 Primary Keys ska användas.
